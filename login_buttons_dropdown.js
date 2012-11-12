@@ -378,6 +378,7 @@
         loginButtonsSession.set('errorMessage', error.reason || "Unknown error");
       } else {
         loginButtonsSession.closeDropdown();
+        if (ty.hook) ty.hook('login')
       }
     });
   };
@@ -418,6 +419,7 @@
         loginButtonsSession.set('errorMessage', error.reason || "Unknown error");
       } else {
         loginButtonsSession.closeDropdown();
+        if (ty.hook) ty.hook('login')
       }
     });
   };
