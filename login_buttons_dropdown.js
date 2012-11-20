@@ -97,7 +97,7 @@
           document.getElementById('login-username').value = usernameOrEmail;
       else
         document.getElementById('login-email').value = usernameOrEmail;
-      // "login-password" is preserved thanks to the preserve-inputs package
+      // "login-password" is preserved, since password fields aren't updated by Spark.
 
       // Force redrawing the `login-dropdown-list` element because of
       // a bizarre Chrome bug in which part of the DIV is not redrawn
@@ -147,7 +147,7 @@
         document.getElementById('login-username').value = username;
       if (document.getElementById('login-email'))
         document.getElementById('login-email').value = email;
-      // "login-password" is preserved thanks to the preserve-inputs package
+      // "login-password" is preserved, since password fields aren't updated by Spark.
       if (document.getElementById('login-username-or-email'))
         document.getElementById('login-username-or-email').value = email || username;
     },
@@ -266,6 +266,10 @@
     return loginButtonsSession.get('inSignupFlow');
   };
 
+  Template._loginButtonsLoggedOutPasswordService.showCreateAccountLink = function () {
+    return !Accounts._options.forbidClientAccountCreation;
+  };
+
   Template._loginButtonsLoggedOutPasswordService.showForgotPasswordLink = function () {
     return _.contains(
       ["USERNAME_AND_EMAIL", "USERNAME_AND_OPTIONAL_EMAIL", "EMAIL_ONLY"],
@@ -375,7 +379,7 @@
 
     Meteor.loginWithPassword(loginSelector, password, function (error, result) {
       if (error) {
-        loginButtonsSession.set('errorMessage', error.reason || "Unknown error");
+        loginButtonsSession.errorMessage(error.reason || "Unknown error");
       } else {
         loginButtonsSession.closeDropdown();
         if (ty.hook) ty.hook('login')
@@ -416,7 +420,7 @@
 
     Accounts.createUser(options, function (error) {
       if (error) {
-        loginButtonsSession.set('errorMessage', error.reason || "Unknown error");
+        loginButtonsSession.errorMessage(error.reason || "Unknown error");
       } else {
         loginButtonsSession.closeDropdown();
         if (ty.hook) ty.hook('login')
@@ -431,12 +435,12 @@
     if (email.indexOf('@') !== -1) {
       Accounts.forgotPassword({email: email}, function (error) {
         if (error)
-          loginButtonsSession.set('errorMessage', error.reason || "Unknown error");
+          loginButtonsSession.errorMessage(error.reason || "Unknown error");
         else
-          loginButtonsSession.set('infoMessage', "Email sent");
+          loginButtonsSession.infoMessage("Email sent");
       });
     } else {
-      loginButtonsSession.set('errorMessage', "Invalid email");
+      loginButtonsSession.errorMessage("Invalid email");
     }
   };
 
@@ -456,11 +460,11 @@
 
     Accounts.changePassword(oldPassword, password, function (error) {
       if (error) {
-        loginButtonsSession.set('errorMessage', error.reason || "Unknown error");
+        loginButtonsSession.errorMessage(error.reason || "Unknown error");
       } else {
         loginButtonsSession.set('inChangePasswordFlow', false);
         loginButtonsSession.set('inMessageOnlyFlow', true);
-        loginButtonsSession.set('infoMessage', "Password changed");
+        loginButtonsSession.infoMessage("Password changed");
       }
     });
   };
@@ -472,7 +476,7 @@
       // notably not trimmed. a password could (?) start or end with a space
       var password = elementValueById('login-password');
       if (password !== passwordAgain) {
-        loginButtonsSession.set('errorMessage', "Passwords don't match");
+        loginButtonsSession.errorMessage("Passwords don't match");
         return false;
       }
     }
