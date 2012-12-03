@@ -8,19 +8,23 @@
     </a>
 
     {{#if dropdownVisible}}
-      <div id="login-dropdown-list" class="accounts-dialog">
-        <a class="login-close-text">Close</a>
-        <div class="login-close-text-clear"></div>
-
-        {{#if inMessageOnlyFlow}}
-          {{> _loginButtonsMessages}}
-        {{else}}
-          {{#if inChangePasswordFlow}}
-            {{> _loginButtonsChangePassword}}
-          {{else}}
-            {{> _loginButtonsLoggedInDropdownActions}}
-          {{/if}}
-        {{/if}}
+      <div id="login-dropdown-list" class="accounts-dialog popover">
+        <div class="popover-inner">
+          <div class="popover-title">
+            <a class="login-close-text">Close</a>
+          </div>
+          <div class="popover-content">
+            {{#if inMessageOnlyFlow}}
+              {{> _loginButtonsMessages}}
+            {{else}}
+              {{#if inChangePasswordFlow}}
+                {{> _loginButtonsChangePassword}}
+              {{else}}
+                {{> _loginButtonsLoggedInDropdownActions}}
+              {{/if}}
+            {{/if}}
+          </div>
+        </div>
       </div>
     {{/if}}
   </div>
