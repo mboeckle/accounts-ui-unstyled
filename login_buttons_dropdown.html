@@ -33,12 +33,12 @@
 
 <template name="_loginButtonsLoggedInDropdownActions">
   {{#if allowChangingPassword}}
-    <div class="login-button" id="login-buttons-open-change-password">
+    <div class="btn" id="login-buttons-open-change-password">
       Change password
     </div>
   {{/if}}
 
-  <div class="login-button" id="login-buttons-logout">
+  <div class="btn" id="login-buttons-logout">
     Sign out
   </div>
 
@@ -109,7 +109,7 @@
 
       {{> _loginButtonsMessages}}
 
-      <div class="login-button login-button-form-submit" id="login-buttons-password">
+      <div class="btn login-button-form-submit" id="login-buttons-password">
         {{#if inSignupFlow}}
           Create account
         {{else}}
@@ -147,7 +147,7 @@
 
     {{> _loginButtonsMessages}}
 
-    <div class="login-button login-button-form-submit" id="login-buttons-forgot-password">
+    <div class="btn login-button-form-submit" id="login-buttons-forgot-password">
       Reset password
     </div>
 
@@ -179,7 +179,7 @@
 
   {{> _loginButtonsMessages}}
 
-  <div class="login-button login-button-form-submit" id="login-buttons-do-change-password">
+  <div class="btn login-button-form-submit" id="login-buttons-do-change-password">
     Change password
   </div>
 </template>
