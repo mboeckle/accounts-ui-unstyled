@@ -180,7 +180,6 @@
     return Accounts._loginButtons.hasPasswordService();
   };
 
-  // return all login services, with password last
   Template._loginButtonsLoggedOutAllServices.services = function () {
     return Accounts._loginButtons.getLoginServices();
   };
